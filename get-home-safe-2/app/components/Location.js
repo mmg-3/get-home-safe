@@ -98,8 +98,8 @@ class LocationA extends Component {
 				initialRegion={{
 					latitude: 40.74992696594516,
 					longitude: -74.00312908000686,
-					latitudeDelta: 0.0922,
-					longitudeDelta: 0.0421
+					latitudeDelta: 0.04,
+					longitudeDelta: 0.02
 				}}
 			>
 				{this.state.isLoading ? null : (
