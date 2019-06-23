@@ -1,12 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Map } from './app/components/Map';
+import LocationA from './app/components/Location';
 
 export default function App() {
 	return (
 		<View style={styles.container}>
 			<Text>Open up App.js to start working on your app!</Text>
-			<Map />
+			<LocationA />
+			{/* <Map /> */}
 		</View>
 	);
 }
