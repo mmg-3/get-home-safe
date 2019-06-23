@@ -62,7 +62,7 @@ class LocationA extends Component {
 					concat: concatLot
 				},
 				() => {
-					this.getDirections(concatLot, '40.74992696594516,-74.00312908000686');
+					this.getDirections('40.74992696594516,-74.00312908000686');
 				}
 			);
 		}
@@ -71,7 +71,7 @@ class LocationA extends Component {
 	async getDirections(startLoc, destinationLoc) {
 		try {
 			let resp = await fetch(
-				`https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${destinationLoc}`
+				`https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${destinationLoc}&key=AIzaSyBKnu1JQMMdfxz8QApWCSWI3wRRIl0Cq8M`
 			);
 			let respJson = await resp.json();
 			console.log('RESPONSE ROUTES', respJson.routes);
