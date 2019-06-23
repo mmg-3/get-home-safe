@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Dimensions, Image, View, StatusBar, TouchableOpacity } from 'react-native';
 import { Container, Text } from 'react-native';
-
+import Directions from './Directions';
 import MapView from 'react-native-maps';
 import Polyline from '@mapbox/polyline';
 
@@ -93,6 +93,7 @@ class LocationA extends Component {
 	}
 	render() {
 		return (
+			// <Directions />
 			<MapView
 				style={styles.map}
 				initialRegion={{
@@ -113,6 +114,7 @@ class LocationA extends Component {
 
 						return (
 							// <Text>Put in your address: </Text>
+
 							<MapView.Marker
 								key={index}
 								coordinate={coords}
@@ -145,7 +147,7 @@ class LocationA extends Component {
 				{!!this.state.latitude &&
 				!!this.state.longitude &&
 				this.state.x == 'true' && (
-					<MapView.Polyline coordinates={this.state.coords} strokeWidth={2} strokeColor="red" />
+					<MapView.Polyline coordinates={this.state.coords} strokeWidth={2} strokeColor="blue" />
 				)}
 
 				{!!this.state.latitude &&
@@ -157,7 +159,7 @@ class LocationA extends Component {
 							{ latitude: this.state.cordLatitude, longitude: this.state.cordLongitude }
 						]}
 						strokeWidth={2}
-						strokeColor="red"
+						strokeColor="blue"
 					/>
 				)}
 			</MapView>
