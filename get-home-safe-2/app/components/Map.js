@@ -1,10 +1,30 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 const styles = StyleSheet.create({
 	map: {
 		...StyleSheet.absoluteFillObject
+	},
+	radius: {
+		height: 50,
+		width: 50,
+		borderRadius: 50 / 2,
+		overflow: 'hidden',
+		backgroundColor: 'rgba(250, 0, 0, 0.1)',
+		// borderWidth: 1,
+		// borderColor: 'rgba(0, 122, 255, 0.3)',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	marker: {
+		height: 20,
+		width: 20,
+		borderWidth: 3,
+		borderColor: 'white',
+		borderRadius: 20 / 2,
+		overflow: 'hidden',
+		backgroundColor: 'red'
 	}
 });
 
@@ -57,12 +77,17 @@ export class Map extends React.Component {
 						const metadata = `Status: ${marker.statusValue}`;
 
 						return (
+							// <Text>Put in your address: </Text>
 							<MapView.Marker
 								key={index}
 								coordinate={coords}
 								title={marker.stationName}
 								description={metadata}
-							/>
+							>
+								<View style={styles.radius}>
+									<View stle={styles.marker} />
+								</View>
+							</MapView.Marker>
 						);
 					})
 				)}
