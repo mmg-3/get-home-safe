@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Dimensions, Image, View, StatusBar, TouchableOpacity } from 'react-native';
 import { Container, Text } from 'react-native';
 import Directions from './Directions';
-import MapView from 'react-native-maps';
-import Polyline from '@mapbox/polyline';
+import MapView, { Polyline } from 'react-native-maps';
+// import Polyline from '@mapbox/polyline';
+
+const polyline = require('@mapbox/polyline');
 
 class LocationA extends Component {
 	constructor(props) {
@@ -71,7 +73,7 @@ class LocationA extends Component {
 	async getDirections(startLoc, destinationLoc) {
 		try {
 			let resp = await fetch(
-				`https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${destinationLoc}&key=AIzaSyBKnu1JQMMdfxz8QApWCSWI3wRRIl0Cq8M`
+				`https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyBKnu1JQMMdfxz8QApWCSWI3wRRIl0Cq8M&origin=${startLoc}&destination=${destinationLoc}`
 			);
 			let respJson = await resp.json();
 			console.log('RESPONSE ROUTES', respJson.routes);
