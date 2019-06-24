@@ -25,6 +25,7 @@ class LocationA extends Component {
 		};
 
 		this.mergeLot = this.mergeLot.bind(this);
+		this.getDirections = this.getDirections.bind(this);
 	}
 
 	componentDidMount() {
@@ -64,19 +65,21 @@ class LocationA extends Component {
 					concat: concatLot
 				},
 				() => {
-					this.getDirections('40.74992696594516,-74.00312908000686');
+					console.log('ABOUT TO GET DIRECTIONS');
+					this.getDirections(concatLot, '40.74992696594516,-74.00312908000686');
 				}
 			);
 		}
 	}
-
 	async getDirections(startLoc, destinationLoc) {
 		try {
+			console.log('START/END', startLoc, destinationLoc);
 			let resp = await fetch(
-				`https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyBKnu1JQMMdfxz8QApWCSWI3wRRIl0Cq8M&origin=${startLoc}&destination=${destinationLoc}`
+				`https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyBKnu1JQMMdfxz8QApWCSWI3wRRIl0Cq8M&origin=${startLoc}&destination=${destinationLoc}&mode=walking`
+				// `https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyBKnu1JQMMdfxz8QApWCSWI3wRRIl0Cq8M&origin=Manhattan&destination=Brooklyn&mode=walking`
 			);
 			let respJson = await resp.json();
-			console.log('RESPONSE ROUTES', respJson.routes);
+			console.log('RESPONSE ROUTES', respJson);
 			let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
 			let coords = points.map((point, index) => {
 				return {
@@ -94,6 +97,8 @@ class LocationA extends Component {
 		}
 	}
 	render() {
+		console.log('STATE COORDS', this.state.coords);
+		console.log('STATE X', this.state.x);
 		return (
 			// <Directions />
 			<MapView
@@ -101,8 +106,8 @@ class LocationA extends Component {
 				initialRegion={{
 					latitude: 40.74992696594516,
 					longitude: -74.00312908000686,
-					latitudeDelta: 0.04,
-					longitudeDelta: 0.02
+					latitudeDelta: 0.03,
+					longitudeDelta: 0.01
 				}}
 			>
 				{this.state.isLoading ? null : (
@@ -154,7 +159,7 @@ class LocationA extends Component {
 
 				{!!this.state.latitude &&
 				!!this.state.longitude &&
-				this.state.x == 'error' && (
+				this.state.x == 'false' && (
 					<MapView.Polyline
 						coordinates={[
 							{ latitude: this.state.latitude, longitude: this.state.longitude },
