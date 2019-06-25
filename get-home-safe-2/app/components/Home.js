@@ -5,7 +5,7 @@ import { Input } from 'react-native-elements';
 
 export class Home extends React.Component {
 	static navigationOptions = {
-		title: 'Get Home Safe'
+		title: 'SecurePath'
 	};
 	render() {
 		const { navigate } = this.props.navigation;

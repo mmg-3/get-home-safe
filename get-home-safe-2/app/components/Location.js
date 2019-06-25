@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Dimensions, Image, View, StatusBar, TouchableOpacity } from 'react-native';
 import { Container, Text } from 'react-native';
 import Directions from './Directions';
-import MapView, { Polyline } from 'react-native-maps';
+import MapView from 'react-native-maps';
 // import Polyline from '@mapbox/polyline';
 
-const polyline = require('@mapbox/polyline');
+const Polyline = require('@mapbox/polyline');
 
 class LocationA extends Component {
 	constructor(props) {
@@ -30,6 +30,7 @@ class LocationA extends Component {
 
 	componentDidMount() {
 		this.fetchMarkerData();
+		this.mergeLot();
 		// navigator.geolocation.getCurrentPosition(
 		// 	(position) => {
 		// 		this.setState({
@@ -65,7 +66,7 @@ class LocationA extends Component {
 					concat: concatLot
 				},
 				() => {
-					console.log('ABOUT TO GET DIRECTIONS');
+					// console.log('ABOUT TO GET DIRECTIONS');
 					this.getDirections(concatLot, '40.74992696594516,-74.00312908000686');
 				}
 			);
@@ -79,14 +80,16 @@ class LocationA extends Component {
 				// `https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyBKnu1JQMMdfxz8QApWCSWI3wRRIl0Cq8M&origin=Manhattan&destination=Brooklyn&mode=walking`
 			);
 			let respJson = await resp.json();
-			console.log('RESPONSE ROUTES', respJson);
+			// console.log('RESPONSE ROUTES', respJson.routes[0]);
 			let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
+			// console.log('POINTS', points);
 			let coords = points.map((point, index) => {
 				return {
 					latitude: point[0],
 					longitude: point[1]
 				};
 			});
+			// console.log('COORDS', coords);
 			this.setState({ coords: coords });
 			this.setState({ x: 'true' });
 			return coords;
@@ -151,6 +154,10 @@ class LocationA extends Component {
 					/>
 				)}
 
+				{/* <MapViewDirections
+        origin = {`${this.state.latitude} , ${this.state.longitude}`}
+        destination = {`${this.state.cordLatitude} , ${this.state.cordLongitude}`} */}
+
 				{!!this.state.latitude &&
 				!!this.state.longitude &&
 				this.state.x == 'true' && (
@@ -159,7 +166,7 @@ class LocationA extends Component {
 
 				{!!this.state.latitude &&
 				!!this.state.longitude &&
-				this.state.x == 'false' && (
+				this.state.x == 'error' && (
 					<MapView.Polyline
 						coordinates={[
 							{ latitude: this.state.latitude, longitude: this.state.longitude },
