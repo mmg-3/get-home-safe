@@ -32,19 +32,19 @@ class LocationA extends Component {
 
 	componentDidMount() {
 		this.fetchMarkerData();
-		this.mergeLot();
-		// navigator.geolocation.getCurrentPosition(
-		// 	(position) => {
-		// 		this.setState({
-		// 			latitude: position.coords.latitude,
-		// 			longitude: position.coords.longitude,
-		// 			error: null
-		// 		});
-		// 		this.mergeLot();
-		// 	},
-		// 	(error) => this.setState({ error: error.message }),
-		// 	{ enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 }
-		// );
+		// this.mergeLot();
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				this.setState({
+					latitude: position.coords.latitude,
+					longitude: position.coords.longitude,
+					error: null
+				});
+				this.mergeLot();
+			},
+			(error) => this.setState({ error: error.message }),
+			{ enableHighAccuracy: true, timeout: 200000, maximumAge: 1000 }
+		);
 	}
 	async fetchMarkerData() {
 		try {
@@ -113,7 +113,7 @@ class LocationA extends Component {
 							longitude: Number(marker.longitude)
 						};
 
-						const metadata = `Status: ${marker.statusValue}`;
+						const metadata = `${marker.ofns_desc}`;
 
 						return (
 							// <Text>Put in your address: </Text>
@@ -121,9 +121,8 @@ class LocationA extends Component {
 							<MapView.Marker
 								key={index}
 								coordinate={coords}
-								title={marker.stationName}
+								title={marker.cmplnt_fr_dt}
 								description={metadata}
-								onPress={this.handlePress}
 							>
 								<View style={styles.radius}>
 									<View stle={styles.marker} />
